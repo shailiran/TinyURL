@@ -4,9 +4,6 @@ from .extensions import db
 from .routes import short
 
 def create_app(config_name):
-    """ 
-    https://stackoverflow.com/questions/20744277/sqlalchemy-create-all-does-not-create-tables
-    """
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_pyfile('config.py')
     db.init_app(app)
