@@ -3,7 +3,6 @@ from flask.globals import request
 
 from .extensions import db
 from .models import URL
-from .utils import base62_decoder, base62_encoder
 
 short = Blueprint('short', __name__)
 
@@ -19,7 +18,6 @@ def home():
       db.session.add(new_url)
       db.session.commit()
       return redirect(url_for("display_short_url", url=new_url.short_url))
-      # return new_url.short_url
   else:
     return render_template('url_page.html')
 
