@@ -32,4 +32,3 @@ def redirect_to_url(short_url):
 @short.route('/display/<url>')
 def display_short_url(url):
     return render_template('short_url.html', short_url_display=url)
-
