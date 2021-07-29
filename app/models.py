@@ -1,5 +1,5 @@
 from .extensions import db
-from .utils import base62_decoder, base62_encoder
+from .utils import base62_encoder
 
 class URL(db.Model):
     """
@@ -14,4 +14,11 @@ class URL(db.Model):
 
     def __init__(self, original):
         self.original_url = original
-        self.short_url = '12345678'
+        self.short_url = base62_encoder()
+
+    def incrementor():
+        info = {"count": 0}
+        def number():
+            info["count"] += 1
+            return info["count"]
+        return number
