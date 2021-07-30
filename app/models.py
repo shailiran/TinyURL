@@ -1,7 +1,5 @@
-# from flask_login import UserMixin
-# from werkzeug.security import generate_password_hash, check_password_hash
 from .extensions import db
-from .utils import base62_decoder, base62_encoder
+from .utils import base62_encoder
 
 class URL(db.Model):
     """
@@ -14,6 +12,6 @@ class URL(db.Model):
     original_url = db.Column('original_url', db.String(512))
     short_url = db.Column('short_url', db.String(8), unique=True)
 
-    def __init__(self, original):
+    def __init__(self, original, counter):
         self.original_url = original
-        self.short_url = '12345678'
+        self.short_url = base62_encoder(counter)

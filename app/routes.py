@@ -3,23 +3,25 @@ from flask.globals import request
 
 from .extensions import db
 from .models import URL
-from .utils import base62_decoder, base62_encoder
 
 short = Blueprint('short', __name__)
+counter = 6
 
 @short.route('/', methods=['POST', 'GET'])
 def home():
+  global counter
   if request.method == 'POST':
     url_received = request.form['nm']
     found_url = URL.query.filter_by(original_url=url_received).first()
     if found_url:
       return redirect(found_url.original_url)
     else:
-      new_url = URL(url_received)
+      new_url = URL(url_received, counter)
+      counter += 1
       db.session.add(new_url)
       db.session.commit()
-      return redirect(url_for("display_short_url", url=new_url.short_url))
-      # return new_url.short_url
+      short_url = new_url.short_url
+      return redirect(url_for('display', url=short_url)) # TODO - change - this is not working!
   else:
     return render_template('url_page.html')
 
@@ -32,6 +34,5 @@ def redirect_to_url(short_url):
     return 'URL does not exist'
 
 @short.route('/display/<url>')
-def display_short_url(url):
+def display(url):
     return render_template('short_url.html', short_url_display=url)
-
