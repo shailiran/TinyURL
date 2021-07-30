@@ -29,7 +29,7 @@ def home():
 def redirect_to_url(short_url):
   original_url = URL.query.filter_by(short_url=short_url).first()
   if original_url:
-    redirect(original_url.original)
+    return redirect(original_url.original_url)
   else:
     return 'URL does not exist'
 
