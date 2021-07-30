@@ -12,13 +12,6 @@ class URL(db.Model):
     original_url = db.Column('original_url', db.String(512))
     short_url = db.Column('short_url', db.String(8), unique=True)
 
-    def __init__(self, original):
+    def __init__(self, original, counter):
         self.original_url = original
-        self.short_url = base62_encoder()
-
-    def incrementor():
-        info = {"count": 0}
-        def number():
-            info["count"] += 1
-            return info["count"]
-        return number
+        self.short_url = base62_encoder(counter)
