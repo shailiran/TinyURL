@@ -14,14 +14,14 @@ def home():
     url_received = request.form['nm']
     found_url = URL.query.filter_by(original_url=url_received).first()
     if found_url:
-      return redirect(found_url.original_url)
+      return redirect(url_for('short.display_short_url', url=found_url.short_url))
     else:
       new_url = URL(url_received, counter)
       counter += 1
       db.session.add(new_url)
       db.session.commit()
       short_url = new_url.short_url
-      return redirect(url_for('display', url=short_url)) # TODO - change - this is not working!
+      return redirect(url_for('short.display_short_url', url=short_url)) # TODO - change - this is not working!
   else:
     return render_template('url_page.html')
 
@@ -29,10 +29,10 @@ def home():
 def redirect_to_url(short_url):
   original_url = URL.query.filter_by(short_url=short_url).first()
   if original_url:
-    redirect(original_url.original)
+    return redirect(original_url.original_url)
   else:
     return 'URL does not exist'
 
 @short.route('/display/<url>')
-def display(url):
+def display_short_url(url):
     return render_template('short_url.html', short_url_display=url)
