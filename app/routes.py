@@ -4,11 +4,12 @@ from .extensions import db
 from .models import URL
 
 short = Blueprint('short', __name__)
-counter = 10
+counter = 0
+flag = False
 
 @short.route('/', methods=['POST', 'GET'])
 def home():
-    global counter
+    global counter, flag
     if request.method == 'POST':
         url_received = request.form['nm']
         found_url = URL.query.filter_by(original_url=url_received).first()
@@ -17,6 +18,9 @@ def home():
                 url_for('short.display_short_url', 
                 url=found_url.short_url))
         else:
+            if flag == False:
+                counter = db.session.query(URL).count()
+            flag = True
             new_url = URL(url_received, counter)
             counter += 1
             db.session.add(new_url)
