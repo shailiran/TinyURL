@@ -10,13 +10,4 @@ def base62_encoder(id):
         r = q % base
         q = floor(q / base)
         res = characters[int(r)] + res
-    return res
-
-def base62_decoder(id):
-    characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    base = len(characters)
-    limit = len(id)
-    res = 0
-    for i in range(limit):
-        res = base * res + characters.find(id[i])
-    return res
+    return res.rjust(6, '0')
