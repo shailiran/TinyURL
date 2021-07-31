@@ -13,14 +13,16 @@ def home():
         url_received = request.form['nm']
         found_url = URL.query.filter_by(original_url=url_received).first()
         if found_url:
-            return redirect(url_for('short.display_short_url', url=found_url.short_url))
+            return redirect(
+                url_for('short.display_short_url', 
+                url=found_url.short_url))
         else:
             new_url = URL(url_received, counter)
             counter += 1
             db.session.add(new_url)
             db.session.commit()
             short_url = new_url.short_url
-            return redirect(url_for('short.display_short_url', url=short_url)) # TODO - change - this is not working!
+            return redirect(url_for('short.display_short_url', url=short_url))
     else:
         return render_template('url_page.html')
 
