@@ -10,7 +10,7 @@ class URL(db.Model):
 
     id = db.Column('id_', db.Integer, primary_key=True)
     original_url = db.Column('original_url', db.String(512))
-    short_url = db.Column('short_url', db.String(8), unique=True)
+    short_url = db.Column('short_url', db.String(6), unique=True)
 
     def __init__(self, original, counter):
         self.original_url = original
