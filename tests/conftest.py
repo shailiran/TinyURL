@@ -16,7 +16,7 @@ def app():
     _app.config["TESTING"] = True
     _app.testing = True
 
-    _app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql://insta_admin:insta2018@server/db'
+    _app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql://insta_admin:insta2018@54.75.34.129:3306/test' #TODO - chenge server: 54.75.34.129:8000
 
     with _app.app_context():
         db.create_all()
