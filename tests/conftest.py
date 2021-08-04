@@ -12,10 +12,11 @@ from app.models import URL
 def client():
     db_fd, db_path = tempfile.mkstemp()
     app = create_app({
-        'TESTING': True, 
-        'SQLALCHEMY_DATABASE_URI': db_path, 
-        'SQLALCHEMY_TRACK_MODIFICATIONS': False
+        'TESTING': True,
+        'SQLALCHEMY_DATABASE_URI': db_path
+        # 'SQLALCHEMY_TRACK_MODIFICATIONS': False
     })
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
 
     with app.test_client() as client:
@@ -31,10 +32,10 @@ def client():
 def mock_url():
     return URL(original='original', counter=1)
 
-@pytest.fixture
-def mock_get_sqlalchemy(mocker):
-    mock = mocker.patch('flask_sqlalchemy._QueryProperty.__get__').return_value = mocker.Mock()
-    return mock
+# @pytest.fixture
+# def mock_get_sqlalchemy(mocker):
+#     mock = mocker.patch('flask_sqlalchemy._QueryProperty.__get__').return_value = mocker.Mock()
+#     return mock
 
 # @pytest.fixture
 # def mock_encoder(mocker):
