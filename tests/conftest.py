@@ -1,21 +1,17 @@
 import pytest
-import os
-import tempfile
 
 from app import create_app
 from app.extensions import db
 
 @pytest.fixture
 def client():
-    db_fd, db_path = tempfile.mkstemp()
-    app = create_app({
-        'TESTING': True,
-        'SQLALCHEMY_DATABASE_URI': db_path
-    })
+    config = {'TESTING': True, 'SQLALCHEMY_DATABASE_URI': 'sqlite://'}
+    app = create_app(config)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    db.init_app(app)
 
     with app.test_client() as client:
+        db.init_app(app)
+
         with app.app_context():
             db.create_all()
             db.session.commit()
@@ -24,6 +20,3 @@ def client():
 
         db.session.remove()
         db.drop_all()
-            
-    os.close(db_fd)
-    os.unlink(db_path)
