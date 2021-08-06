@@ -9,6 +9,7 @@ def create_app(config_name):
     if type(config_name) is not dict:
         app.config.from_pyfile('config.py')
     else:
+        # Testing
         app.config.from_mapping(config_name)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
