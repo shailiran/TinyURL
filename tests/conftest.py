@@ -5,7 +5,10 @@ from app.extensions import db
 
 @pytest.fixture
 def client():
-    config = {'TESTING': True, 'SQLALCHEMY_DATABASE_URI': 'sqlite://'}
+    config = {
+        'TESTING': True, 
+        'SQLALCHEMY_DATABASE_URI': 'sqlite://'
+    }
     app = create_app(config)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
