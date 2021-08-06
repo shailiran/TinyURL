@@ -14,3 +14,4 @@ flask db upgrade
 
 cd /Photos-Docker-Flask
 python run.py
+# python -m pytest --cov-report term-missing --cov=app tests/
